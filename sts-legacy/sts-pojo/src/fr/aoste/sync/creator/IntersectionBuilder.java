@@ -49,7 +49,6 @@ class IntersectionBuilder extends ACCSLStsBuilder<SynchronousTransitionSystem> {
 			c.getOperands().add(InvariantBuilder.buildInvariant(intersectionE, events[i], 0, ComparisonOperator.LESSOREQUAL));
 		}
 		init.setInvariant(c);
-		sts.getStates().add(init);
 
 		boolean[] clockStatus = new boolean[nbClocks];
 		int pos = 0;

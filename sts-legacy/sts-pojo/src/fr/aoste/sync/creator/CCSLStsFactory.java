@@ -160,4 +160,12 @@ final public class CCSLStsFactory implements ICCSLStsFactory<SynchronousTransiti
 		builder.setParameterValue(SubclockBuilder.SUPERCLOCK, clock2);
 		return builder;
 	}
+	@Override
+	public STSBuilder<SynchronousTransitionSystem> createMinusBuilder(String minus, String clock1, String clock2) {
+        MinusBuilder builder = new MinusBuilder();
+		builder.setParameterValue(MinusBuilder.MINUS, minus);
+		builder.setParameterValue(MinusBuilder.CLOCK1, clock1);
+		builder.setParameterValue(MinusBuilder.CLOCK2, clock2);
+		return builder;
+	}
 }

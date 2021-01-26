@@ -42,4 +42,6 @@ public interface ICCSLSystemBuilder<RESULT> {
 
 	// Default values, every => 1, from => 0
 	String filter(String base, int every, int from);
+
+	String minus(String operand1, String operand2);
 }

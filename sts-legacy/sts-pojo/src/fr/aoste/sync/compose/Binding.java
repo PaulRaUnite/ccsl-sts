@@ -1,11 +1,11 @@
 package fr.aoste.sync.compose;
 
 
-final class Binding implements IBinding {
+public final class Binding implements IBinding {
 	private String name;
 	private int numSts;
-	private String formalParameter;
-	Binding(String name, int numSts, String operand) {
+    private String formalParameter;
+	public Binding(String name, int numSts, String operand) {
 		super();
 		this.name = name;
 		this.numSts = numSts;
@@ -30,4 +30,7 @@ final class Binding implements IBinding {
 	public String toString() {
 		return name+"<-"+this.formalParameter+" in "+numSts;
 	}
+    public String getFormalParameter() {
+        return formalParameter;
+    }
 }

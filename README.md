@@ -1,6 +1,9 @@
 # ccsl-sts
 Compilation of Light-CCSL into Synchronized Transition Systems 
 
+## Compiling CCSL to C
+See [embedded-ccsl](./embedded-ccsl) directory.
+
 ## Deploying Light-CCSL into Eclipse
 1. Install Eclipse, be sure to use the [Modeling Package](https://www.eclipse.org/downloads/packages/release/2020-09/r/eclipse-modeling-tools)
 2. Launch Eclipse and install XText

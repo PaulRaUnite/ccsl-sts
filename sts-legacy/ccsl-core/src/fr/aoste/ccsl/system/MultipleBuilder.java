@@ -178,7 +178,17 @@ final public class MultipleBuilder implements ICCSLSystemBuilder<List<Object>>{
 		}
 		return getNameForList(res);
 	}
-	@Override
+
+    @Override
+    public String minus(String operand1, String operand2) {
+        ArrayList<String> res = new ArrayList<>();
+        for (int i = 0; i<builders.size(); i++) {
+            res.add(builders.get(i).minus(idToClock(i, operand1), idToClock(i, operand2)));
+        }
+        return getNameForList(res);
+    }
+
+    @Override
 	public void addSpecification(ICCSLSystemBuilder<?> b) {
 		for(ICCSLSystemBuilder<?> builder : builders) {
 			builder.addSpecification(b);

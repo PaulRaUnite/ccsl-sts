@@ -49,7 +49,6 @@ class UnionBuilder extends ACCSLStsBuilder<SynchronousTransitionSystem> {
 			c.getOperands().add(InvariantBuilder.buildInvariant(unionE, events[i], 0, ComparisonOperator.GREATEROREQUAL));
 		}
 		init.setInvariant(c);
-		sts.getStates().add(init);		
 		
 		boolean[] clockStatus = new boolean[nbClocks];
 		int pos = 0;

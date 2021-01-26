@@ -9,16 +9,16 @@ import fr.aoste.ccsl.core.ICCSLSpecification;
 /**
  * This class is to use core.ICCSLSpecification (like JavaBuilder, extendedSpecificationBuilder) called
  * the simple API of system.ICCSLSystemBuilder
- * 
+ *
  * @author fmallet
  */
 public class CoreToSystemAdapter<RESULT> implements ICCSLSystemBuilder<RESULT> {
 	private ICCSLSpecification<RESULT> toAdapt; // Object to adapt
-	
+
 	private HashMap<String, ICCSLClock> nameToClock = new HashMap<>();
-	
+
 	static public <RESULT> ICCSLSystemBuilder<RESULT> buildAdapter(ICCSLSpecification<RESULT> toAdapt) {
-		return new AntiAliasCCSLSystemBuilder<>(new CoreToSystemAdapter<>(toAdapt));
+		return new CoreToSystemAdapter<>(toAdapt);
 	}
 	private CoreToSystemAdapter(ICCSLSpecification<RESULT> toAdapt) {
 		super();
@@ -52,12 +52,12 @@ public class CoreToSystemAdapter<RESULT> implements ICCSLSystemBuilder<RESULT> {
 	public void exclusion(String left, String right) {
 		toAdapt.addExclusion(getClock(left), getClock(right));
 	}
-	
+
 	@Override
 	public void subclock(String left, String right) {
 		toAdapt.addSubclock(getClock(left), getClock(right));
 	}
-	
+
 	@Override
 	public void alternates(String left, String right) {
 		toAdapt.addConstraint("Alternates").bind("LEFT", left).bind("RIGHT", right);
@@ -65,7 +65,7 @@ public class CoreToSystemAdapter<RESULT> implements ICCSLSystemBuilder<RESULT> {
 
 	@Override
 	public void coincides(String c1, String c2) {
-		throw new RuntimeException(this+":coincides should not be called:must be intercepted by a decorator treating aliases in a generic way");		
+		throw new RuntimeException(this+":coincides should not be called:must be intercepted by a decorator treating aliases in a generic way");
 	}
 
 	@Override
@@ -125,4 +125,9 @@ public class CoreToSystemAdapter<RESULT> implements ICCSLSystemBuilder<RESULT> {
 		ICCSLClock res = toAdapt.addFilter(getClock(base), every, from);
 		return res.toString();
 	}
+
+    @Override
+    public String minus(String operand1, String operand2) {
+        throw new RuntimeException("Not implemented yet");
+    }
 }

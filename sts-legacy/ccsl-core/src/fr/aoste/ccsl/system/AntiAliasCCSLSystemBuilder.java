@@ -4,25 +4,18 @@ import java.util.HashMap;
 
 /**
  * Decorator to remove aliases due to coincides expressions !
- * 
+ *
  * @author fmallet
  *
  * @param <RESULT>
  */
 final public class AntiAliasCCSLSystemBuilder<RESULT> implements ICCSLSystemBuilder<RESULT> {
 	private ICCSLSystemBuilder<RESULT> decorated;
-	public AntiAliasCCSLSystemBuilder(ICCSLSystemBuilder<RESULT> toDecorate) {
+	public AntiAliasCCSLSystemBuilder(ICCSLSystemBuilder<RESULT> toDecorate, HashMap<String, String> aliases) {
 		this.decorated = toDecorate;
+		this.aliases = aliases;
 	}
 
-	/**
-	 * @param name may be an alias
-	 * @return concrete name of the alias
-	 */
-	private String resolveAlias(String name) {
-		return resolve(name, null);
-	}
-	
 	@Override
 	public RESULT getCCSLSystem() {
 		return decorated.getCCSLSystem();
@@ -47,33 +40,25 @@ final public class AntiAliasCCSLSystemBuilder<RESULT> implements ICCSLSystemBuil
 	public void exclusion(String left, String right) {
 		decorated.exclusion(resolveAlias(left), resolveAlias(right));
 	}
-	
+
 	@Override
 	public void subclock(String left, String right) {
 		decorated.subclock(resolveAlias(left), resolveAlias(right));
 	}
-	
-	private HashMap<String, String> aliases = new HashMap<>();
+
+	private final HashMap<String, String> aliases;
 	@Override
 	public void coincides(String c1, String c2) {
-		if (c1.equals(c2)) return; // nothing to do
-		
-		String tgtC1 = resolve(c1, c2); 
-		if (tgtC1==null) return; // C2 is already on the path down c1;
-		
-		String tgtC2 = resolve(c2, c1); // tries to make acyclic trees and not graphs!
-		if (tgtC2!=null) {
-			aliases.put(tgtC2, c1); // aliases are built backwards to make trees.
-		}
+
 	}
-	
-	// avoid is used to prevent cyclic aliases
-	private String resolve(String name, String avoid) {
-		String res = aliases.get(name);
-		if (res==null) return name;
-		if (res==avoid) return null;
-		return resolve(res, avoid); 
-	}	
+
+    /**
+     * @param name may be an alias
+     * @return concrete name of the alias
+     */
+	private String resolveAlias(String name) {
+		return aliases.getOrDefault(name, name);
+	}
 
 	@Override
 	public String union(String... operands) {
@@ -136,4 +121,9 @@ final public class AntiAliasCCSLSystemBuilder<RESULT> implements ICCSLSystemBuil
 	public String filter(String base, int every, int from) {
 		return decorated.filter(resolveAlias(base), every, from);
 	}
+
+    @Override
+    public String minus(String operand1, String operand2) {
+        return decorated.minus(resolveAlias(operand1), resolveAlias(operand2));
+    }
 }

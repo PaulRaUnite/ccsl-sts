@@ -87,7 +87,12 @@ Iterable<ICCSLSpecificationElement>{
 		return f.getName();
 	}
 
-	@Override
+    @Override
+    public String minus(String operand1, String operand2) {
+        throw new RuntimeException("Not implemented yet");
+    }
+
+    @Override
 	public String inf(String... operands) {
 		throw new RuntimeException("Not implemented yet");
 		// TODO Auto-generated method stub

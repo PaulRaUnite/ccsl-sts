@@ -28,4 +28,5 @@ public interface ICCSLStsFactory<STS> {
 	public STSBuilder<STS> createCoincidesBuilder(String ... src);
 	public STSBuilder<STS> createExcludesBuilder(String ... src);
 	public STSBuilder<STS> createSubclockBuilder(String clock1, String clock2);
+	public STSBuilder<STS> createMinusBuilder(String result, String left, String right);
 }
